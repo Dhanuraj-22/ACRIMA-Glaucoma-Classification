@@ -1,1 +1,5 @@
-
+Model,MLFF,Accuracy,Sensitivity,Specificity,Precision,F1
+ConvNeXt-Tiny,With MLFF,94.33,96.20,91.94,93.83,95.00
+MaxViT-Tiny,With MLFF,97.16,97.47,96.77,97.47,97.47
+Swin-Tiny,With MLFF,95.74,93.67,98.39,98.67,96.10
+ResNet50,With MLFF,97.87,97.47,98.39,98.72,98.09
