@@ -1,1 +1,7 @@
 
+streamlit
+torch
+torchvision
+timm
+pillow
+
