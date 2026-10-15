@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import timm
+from huggingface_hub import hf_hub_download
 from PIL import Image
 from torchvision import transforms
 from pathlib import Path
@@ -16,7 +17,7 @@ st.set_page_config(
 )
 
 DEVICE = torch.device("cpu")
-CHECKPOINT = Path(__file__).parent / "convnext_mlff.pth"
+MODEL_REPO = "dhanuraj/acrima-convnext-mlff"
 
 # ---------- Model architecture ----------
 class ConvNeXt8020Fusion(nn.Module):
@@ -85,22 +86,21 @@ transform = transforms.Compose([
 
 @st.cache_resource
 def load_model():
-    if not CHECKPOINT.exists():
-        raise FileNotFoundError(
-            f"Checkpoint not found: {CHECKPOINT.name}"
-        )
+    checkpoint_path = hf_hub_download(
+        repo_id=MODEL_REPO,
+        filename="convnext_mlff.pth",
+        repo_type="model"
+    )
 
     model = ConvNeXt8020Fusion(num_classes=2)
-
     state = torch.load(
-        CHECKPOINT,
+        checkpoint_path,
         map_location=DEVICE,
         weights_only=True
     )
     model.load_state_dict(state)
     model.to(DEVICE)
     model.eval()
-
     return model
 
 
